@@ -37,4 +37,4 @@ class Demo extends Component {
   }
 }
 
-ReactDOM.render(<Demo />, document.querySelector('#demo'));
+ReactDOM.render(<React.Fragment><Demo /></React.Fragment>, document.querySelector('#demo'));

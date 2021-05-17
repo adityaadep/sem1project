@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
+import { Redirect } from 'react-router';
 import styled from 'styled-components';
-
 import EmailEditor from '../../../src';
 import sample from './sample.json';
 
@@ -25,6 +25,7 @@ font-size: 25px;
 text-align: center;
 color: #fff;
 }
+
 
 button {
 flex: 1;
@@ -67,6 +68,38 @@ const Popbox = styled.div `
     overflow: auto;
   }
 
+  textarea{
+    position: absolute;
+    
+    top: 0%;
+    bottom: 0%;
+    margin: auto;
+    background: #222;
+    color:#fff;
+    font-size: 12px;
+    overflow: auto;
+    width: 100%;
+    height:100%;
+  }
+  .copyBtn{
+      
+    flex: 1;
+    padding: 10px;
+    background: none;
+    font-size: 20px;
+    color: white;
+    position: absolute;
+    top: 80%;
+    right:25%;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 5px;
+  }
+  .copyBtn: hover{
+    color: black;
+    border: 2px solid black;
+  }
+
   .closebtn{
     border: none;
     flex: 1;
@@ -90,6 +123,18 @@ const emailEditorRef = useRef(null);
 const closebtn = ()=>{
   const cls = document.getElementById("popup").style.display = "none";
 }
+
+const composebtn = ()=>{
+  window.location.href = "demo/src/example/email.html";
+}
+const copyCode = ()=>{
+  const htmlcon = document.getElementById("htmlcon");
+  htmlcon.select();
+  document.execCommand("copy");
+  alert("Html copied succesfully.");
+
+}
+
 const exportHtml = () => {
 emailEditorRef.current.editor.exportHtml((data) => {
 const { design, html } = data;
@@ -98,7 +143,7 @@ const cls = document.getElementById("popup").style.display = "block";
 
 const htmlcon = document.getElementById("htmlcon");
 
-htmlcon.innerText = html; 
+htmlcon.value = html;
 //alert('Output HTML has been logged in your developer console.');
 });
 };
@@ -120,14 +165,18 @@ return ( <Container>
         <h1> Email Editor. </h1>
 
         <button onClick={ exportHtml }> Export HTML </button>
+        <button onClick = { composebtn } > Go to Compose Email </button>
     </Bar>
 
       <Popbox>
       <div id='popup'>
       <button onClick={ closebtn } className="closebtn">X</button>
         <div className='popup_inner'>
-          <div id="htmlcon"></div>
+        <textarea id = "htmlcon" > </textarea> 
+        
         </div>
+        <button onClick = { copyCode }
+        className = "copyBtn" >Copy Code</button> 
       </div>
       </Popbox>
 

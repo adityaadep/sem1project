@@ -94,3 +94,4 @@ export default class extends Component {
     this.editor.setMergeTags(mergeTags);
   };
 }
+
